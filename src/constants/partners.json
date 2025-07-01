@@ -1,0 +1,20 @@
+{
+  "partners": [
+    {
+      "name": "Spitalul Municipal Brașov",
+      "imageUrl": "https://via.placeholder.com/200x100/4285f4/ffffff?text=Spital+Municipal"
+    },
+    {
+      "name": "Consiliul Județean Brașov",
+      "imageUrl": "https://via.placeholder.com/200x100/34a853/ffffff?text=CJ+Brasov"
+    },
+    {
+      "name": "Inspectoratul Școlar Brașov",
+      "imageUrl": "https://via.placeholder.com/200x100/ea4335/ffffff?text=ISJ+Brasov"
+    },
+    {
+      "name": "Colegiul Medicilor Brașov",
+      "imageUrl": "https://via.placeholder.com/200x100/fbbc04/ffffff?text=CM+Brasov"
+    }
+  ]
+}

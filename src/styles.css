@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  color: #212121;
 }
 
 body {
@@ -19,7 +20,7 @@ body {
 
 /* Hero Section */
 .hero {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #9bd4e4 0%, #6ccfeb 100%);
   min-height: 100vh;
   display: flex;
   align-items: center;
@@ -55,6 +56,7 @@ body {
   margin-bottom: 1rem;
   text-shadow: 0 4px 20px rgba(0,0,0,0.3);
   line-height: 1.1;
+  text-align: center;
 }
 
 .hero-subtitle {
@@ -62,6 +64,7 @@ body {
   margin-bottom: 2rem;
   opacity: 0.95;
   font-weight: 300;
+  text-align: center;
 }
 
 .hero-stats {
@@ -187,7 +190,7 @@ body {
 /* Cardiac Arrest Section */
 .cardiac-info {
   padding: 6rem 0;
-  background: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+  background: linear-gradient(45deg, #e8b768 0%, #f9a825 100%);
   color: white;
 }
 
@@ -261,7 +264,7 @@ body {
   color: white;
 }
 
-.step-card:nth-child(1) .step-icon { background: linear-gradient(45deg, #667eea, #764ba2); }
+.step-card:nth-child(1) .step-icon { background: linear-gradient(45deg, #667eea, #9bd4e4); }
 .step-card:nth-child(2) .step-icon { background: linear-gradient(45deg, #f093fb, #f5576c); }
 .step-card:nth-child(3) .step-icon { background: linear-gradient(45deg, #4facfe, #00f2fe); }
 
@@ -277,13 +280,13 @@ body {
   line-height: 1.6;
 }
 
-/* Partners Section */
-.partners {
+/* Founders Section */
+.founders {
   padding: 6rem 0;
   background: #f8fafc;
 }
 
-.partners-grid {
+.founders-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 3rem;
@@ -291,7 +294,7 @@ body {
   align-items: center;
 }
 
-.partner-card {
+.founder-card {
   background: white;
   padding: 2rem;
   border-radius: 20px;
@@ -300,11 +303,11 @@ body {
   transition: transform 0.3s ease;
 }
 
-.partner-card:hover {
+.founder-card:hover {
   transform: translateY(-5px);
 }
 
-.partner-logo {
+.founder-logo {
   width: 80px;
   height: 80px;
   margin: 0 auto 1rem;
@@ -316,18 +319,18 @@ body {
   color: white;
 }
 
-.partner-card:nth-child(1) .partner-logo { background: linear-gradient(45deg, #667eea, #764ba2); }
-.partner-card:nth-child(2) .partner-logo { background: linear-gradient(45deg, #4facfe, #00f2fe); }
-.partner-card:nth-child(3) .partner-logo { background: linear-gradient(45deg, #43e97b, #38f9d7); }
+.founder-card:nth-child(1) .founder-logo { background: linear-gradient(45deg, #f093fb, #f5576c); }
+.founder-card:nth-child(2) .founder-logo { background: linear-gradient(45deg, #4facfe, #00f2fe); }
+.founder-card:nth-child(3) .founder-logo { background: linear-gradient(45deg, #e8b768, #f9a825); }
 
-.partner-card h3 {
+.founder-card h3 {
   font-size: 1.2rem;
   font-weight: 600;
   margin-bottom: 0.5rem;
   color: #2d3748;
 }
 
-.partner-card p {
+.founder-card p {
   color: #4a5568;
   font-size: 0.9rem;
 }
@@ -335,7 +338,7 @@ body {
 /* CTA Section */
 .cta {
   padding: 6rem 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, #9bd4e4 0%, #6ccfeb 100%);
   color: white;
   text-align: center;
 }
@@ -368,7 +371,7 @@ body {
 
 .btn-primary {
   background: white;
-  color: #667eea;
+  color: #e53935;
 }
 
 .btn-primary:hover {
@@ -384,7 +387,7 @@ body {
 
 .btn-outline:hover {
   background: white;
-  color: #667eea;
+  color: #e53935;
 }
 
 /* Footer */

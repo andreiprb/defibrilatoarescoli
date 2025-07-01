@@ -20,8 +20,11 @@ class DefibrillatorLanding {
      * Initialize all functionality
      */
     async init() {
-        // Load constants first
-        await this.loadConstants();
+        // Load both constants and partners in parallel
+        await Promise.all([
+            this.loadConstants(),
+            this.loadPartners()
+        ]);
 
         // Wait for DOM to be fully loaded
         if (document.readyState === 'loading') {
@@ -34,24 +37,124 @@ class DefibrillatorLanding {
     }
 
     /**
-     * Load constants from JSON file
+     * Load constants (contact info) from JSON file
      */
     async loadConstants() {
         try {
-            const response = await fetch('./constants/constants.json');
+            const response = await fetch('./constants/contact.json');
             this.constants = await response.json();
             this.updateContactInfo();
         } catch (error) {
-            console.error('Failed to load constants:', error);
+            console.error('Failed to load contact constants:', error);
             // Fallback values
             this.constants = {
                 contact: {
-                    email: "contact@defibrilatoareinscoli.ro",
+                    email: "defibrilatoareinscoli@gmail.com",
                     phone: "+40751234567",
                     phoneDisplay: "0751 234 567"
                 }
             };
             this.updateContactInfo();
+        }
+    }
+
+    /**
+     * Load partners from JSON file
+     */
+    async loadPartners() {
+        try {
+            const response = await fetch('./constants/partners.json');
+            const partnersData = await response.json();
+
+            if (partnersData && partnersData.partners && Array.isArray(partnersData.partners)) {
+                this.renderPartners(partnersData.partners);
+            } else {
+                console.warn('Partners data is not in expected format or is empty');
+                this.hidePartnersSection();
+            }
+        } catch (error) {
+            console.error('Failed to load partners:', error);
+            this.hidePartnersSection();
+        }
+    }
+
+    /**
+     * Hide partners section if no data available
+     */
+    hidePartnersSection() {
+        const partnersSection = document.querySelector('.partners');
+        if (partnersSection) {
+            partnersSection.style.display = 'none';
+        }
+    }
+
+    /**
+     * Show partners section
+     */
+    showPartnersSection() {
+        const partnersSection = document.querySelector('.partners');
+        if (partnersSection) {
+            partnersSection.style.display = 'block';
+        }
+    }
+
+    /**
+     * Render partners in the DOM
+     */
+    renderPartners(partners) {
+        const container = document.getElementById('partners-container');
+        if (!container) {
+            console.error('Partners container not found');
+            return;
+        }
+
+        if (!partners || !partners.length) {
+            console.warn('No partners to render');
+            this.hidePartnersSection();
+            return;
+        }
+
+        // Show partners section
+        this.showPartnersSection();
+
+        // Clear existing content
+        container.innerHTML = '';
+
+        partners.forEach((partner, index) => {
+            // Validate partner data
+            if (!partner.name || !partner.imageUrl) {
+                console.warn('Invalid partner data:', partner);
+                return;
+            }
+
+            const partnerCard = document.createElement('div');
+            partnerCard.className = 'partner-card animate-on-scroll';
+            partnerCard.style.transitionDelay = `${index * 0.1}s`;
+
+            partnerCard.innerHTML = `
+                <img src="${partner.imageUrl}" alt="${partner.name}" class="partner-image" 
+                     onerror="this.style.display='none'" 
+                     onload="this.style.display='block'">
+                <h3>${partner.name}</h3>
+            `;
+
+            container.appendChild(partnerCard);
+        });
+
+        // Re-setup animations for new elements
+        this.setupAnimationsForPartners();
+    }
+
+    /**
+     * Setup animations for dynamically added partners
+     */
+    setupAnimationsForPartners() {
+        const partnerCards = document.querySelectorAll('.partner-card');
+
+        if (this.observer) {
+            partnerCards.forEach(card => {
+                this.observer.observe(card);
+            });
         }
     }
 
@@ -188,7 +291,8 @@ class DefibrillatorLanding {
             { selector: '.about .animate-on-scroll', baseDelay: 0, increment: 0.3 },
             { selector: '.cardiac-info .animate-on-scroll', baseDelay: 0, increment: 0.2 },
             { selector: '.steps .animate-on-scroll', baseDelay: 0, increment: 0.2 },
-            { selector: '.partners .animate-on-scroll', baseDelay: 0, increment: 0.15 },
+            { selector: '.founders .animate-on-scroll', baseDelay: 0, increment: 0.15 },
+            { selector: '.partners .animate-on-scroll', baseDelay: 0, increment: 0.1 },
             { selector: '.cta .animate-on-scroll', baseDelay: 0, increment: 0.1 }
         ];
 
@@ -254,6 +358,58 @@ class DefibrillatorLanding {
         this.animatedElements.forEach(element => {
             element.classList.remove('animated');
         });
+    }
+
+    /**
+     * Public method to add new partners dynamically
+     */
+    addPartner(partner) {
+        if (!partner || !partner.name || !partner.imageUrl) {
+            console.error('Invalid partner data');
+            return;
+        }
+
+        const container = document.getElementById('partners-container');
+        if (!container) return;
+
+        const partnerCard = document.createElement('div');
+        partnerCard.className = 'partner-card animate-on-scroll';
+
+        partnerCard.innerHTML = `
+            <img src="${partner.imageUrl}" alt="${partner.name}" class="partner-image" onerror="this.style.display='none'">
+            <h3>${partner.name}</h3>
+        `;
+
+        container.appendChild(partnerCard);
+
+        // Setup animation for new element
+        if (this.observer) {
+            this.observer.observe(partnerCard);
+        }
+    }
+
+    /**
+     * Public method to reload contact information
+     */
+    async reloadContactInfo() {
+        await this.loadConstants();
+    }
+
+    /**
+     * Public method to reload partners
+     */
+    async reloadPartners() {
+        await this.loadPartners();
+    }
+
+    /**
+     * Public method to reload all data
+     */
+    async reloadAllData() {
+        await Promise.all([
+            this.loadConstants(),
+            this.loadPartners()
+        ]);
     }
 
     /**
@@ -357,6 +513,65 @@ class ContactFormHandler {
     }
 }
 
+// Partners Management Utility (for dynamic partner management)
+class PartnersManager {
+    constructor(landingPageInstance) {
+        this.landingPage = landingPageInstance;
+        this.partners = [];
+    }
+
+    /**
+     * Add a new partner
+     */
+    async addPartner(name, imageUrl) {
+        const partner = { name, imageUrl };
+        this.partners.push(partner);
+
+        if (this.landingPage) {
+            this.landingPage.addPartner(partner);
+        }
+
+        return partner;
+    }
+
+    /**
+     * Remove a partner by name
+     */
+    removePartner(name) {
+        this.partners = this.partners.filter(p => p.name !== name);
+
+        // Remove from DOM
+        const container = document.getElementById('partners-container');
+        if (container) {
+            const partnerCards = container.querySelectorAll('.partner-card');
+            partnerCards.forEach(card => {
+                const partnerName = card.querySelector('h3')?.textContent;
+                if (partnerName === name) {
+                    card.remove();
+                }
+            });
+        }
+    }
+
+    /**
+     * Get all partners
+     */
+    getPartners() {
+        return [...this.partners];
+    }
+
+    /**
+     * Clear all partners
+     */
+    clearPartners() {
+        this.partners = [];
+        const container = document.getElementById('partners-container');
+        if (container) {
+            container.innerHTML = '';
+        }
+    }
+}
+
 // Initialize everything when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
     // Main landing page functionality
@@ -368,10 +583,14 @@ document.addEventListener('DOMContentLoaded', () => {
     // Contact form handler (optional)
     const contactForm = new ContactFormHandler();
 
+    // Partners manager for dynamic management
+    const partnersManager = new PartnersManager(landingPage);
+
     // Expose to global scope for debugging in development
     if (typeof window !== 'undefined') {
         window.landingPage = landingPage;
         window.statsCounter = statsCounter;
         window.contactForm = contactForm;
+        window.partnersManager = partnersManager;
     }
 });
