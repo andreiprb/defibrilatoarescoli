@@ -467,7 +467,7 @@ body {
 /* Responsive Design */
 @media (max-width: 900px) {
   .hero {
-    padding: 6em 1em 1em 1em;
+    padding: 6em 1em;
   }
 
   .hero-stats {
@@ -496,6 +496,50 @@ body {
   .btn {
     width: 100%;
     max-width: 300px;
+  }
+}
+
+@media (max-width: 550px) {
+  .hero > .container {
+    padding: 0; /* Reduce side padding */
+  }
+
+  .hero-stats {
+    grid-template-columns: 1fr; /* Force single column */
+    gap: 1.5rem; /* Reduce gap */
+    max-width: 350px; /* Limit max width */
+    margin: 2rem auto 0; /* Center the grid itself */
+    justify-items: center; /* Center items within grid */
+  }
+
+  .stat-card {
+    max-width: 300px;
+    width: 100%; /* Take full available width */
+    margin: 0 auto; /* Additional centering */
+  }
+
+  .hero h1 {
+    font-size: clamp(2rem, 9vw, 3.5rem); /* Slightly smaller */
+    text-align: center;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%); /* Force exact center */
+    width: calc(100vw - 40px); /* Account for padding */
+    max-width: 100%;
+  }
+
+  .stat-number {
+    font-size: 2.2rem; /* Slightly smaller numbers */
+  }
+
+  .stat-text {
+    font-size: 0.85rem; /* Smaller text */
+  }
+}
+
+@media(max-width: 385px) {
+  .hero {
+    padding: 9em 1em 6em 1em;
   }
 }
 
