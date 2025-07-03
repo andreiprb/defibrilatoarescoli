@@ -457,7 +457,11 @@ body {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  .hero {
+    padding-top: 6em;
+  }
+
   .hero-stats {
     grid-template-columns: 1fr;
   }
