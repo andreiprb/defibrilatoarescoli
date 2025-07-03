@@ -6,7 +6,7 @@
 }
 
 body {
-  font-family: 'Inter', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   line-height: 1.6;
   color: #333;
   overflow-x: hidden;
@@ -128,9 +128,22 @@ body {
 }
 
 .logo {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
   font-size: 1.5rem;
   font-weight: 700;
   color: #667eea;
+}
+
+.logo-icon {
+  width: 32px;
+  height: 32px;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: 700;
 }
 
 .nav-links {
@@ -220,6 +233,7 @@ body {
 }
 
 .cardiac-image img {
+  background-color: #f5576c;
   width: 80%;
   max-width: 400px;
   border-radius: 50%;
@@ -335,10 +349,23 @@ body {
   font-size: 0.9rem;
 }
 
+.partners {
+  padding: 6rem 0;
+  background: linear-gradient(135deg, #9bd4e4 0%, #6ccfeb 100%);
+}
+
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 3rem;
+  margin-top: 3rem;
+  align-items: center;
+}
+
 /* CTA Section */
 .cta {
   padding: 6rem 0;
-  background: linear-gradient(135deg, #9bd4e4 0%, #6ccfeb 100%);
+  background: #f8fafc;
   color: white;
   text-align: center;
 }
@@ -370,24 +397,22 @@ body {
 }
 
 .btn-primary {
-  background: white;
-  color: #e53935;
+  background: #e53935;
 }
 
 .btn-primary:hover {
-  transform: translateY(-2px);
   box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
 .btn-outline {
   background: transparent;
-  color: white;
-  border: 2px solid white;
+  color: #e53935;
+  border: 2px solid #e53935;
 }
 
 .btn-outline:hover {
-  background: white;
-  color: #e53935;
+  background: #e53935;
+  color: #212121;
 }
 
 /* Footer */
@@ -425,6 +450,10 @@ body {
   padding-top: 1rem;
   color: #a0aec0;
   font-size: 0.9rem;
+}
+
+.footer-bottom p {
+  color: #a0aec0;
 }
 
 /* Responsive Design */
